@@ -1,13 +1,19 @@
 doctype html
 html
   head
-    title= title
+    title #{title}: Express Server
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/css/style.css')
   body
     include ./menu.jade
     block content
+    footer
+      .container
+        .row
+          .col-md-12
+            hr
+            p &copy; 2015, All Rights Reserved
     script(src='/js/bootstrap.min.js', type='type/javascript')
     script(src='/js/jquery-2.1.4.min.js', type='type/javascript')
   

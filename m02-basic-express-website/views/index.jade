@@ -1,8 +1,24 @@
 extends layout
 
 block content
+  section.container-fluid
+    .jumbotron
+      .container
+        h1 How May I Help You?
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id lacus consectetur, tincidunt ligula sit amet, consequat nisi. Sed mauris felis, ornare quis accumsan vitae, ullamcorper ut mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+        a.btn.btn-primary.btn-lg(href='#') Learn more &raquo;
   section.container
-    .row
-      .col-md-12
-        h1= title
-        p Welcome to #{title}
+    .container  
+      .row
+        .col-md-4
+          h2 About Us
+          p Quisque placerat, tellus quis efficitur mollis, nibh elit dignissim libero, nec sagittis sem metus ut dui. Duis rutrum tortor sed tincidunt fermentum. Mauris sollicitudin mi sit amet erat auctor, sed sodales ante congue. In vel ultricies nisl.
+          a.btn.btn-default(href="#") Read more
+        .col-md-4
+          h2 Services
+          p Quisque placerat, tellus quis efficitur mollis, nibh elit dignissim libero, nec sagittis sem metus ut dui. Duis rutrum tortor sed tincidunt fermentum. Mauris sollicitudin mi sit amet erat auctor, sed sodales ante congue. In vel ultricies nisl.
+          a.btn.btn-default(href="#") Read more
+        .col-md-4
+          h2 Contact
+          p Quisque placerat, tellus quis efficitur mollis, nibh elit dignissim libero, nec sagittis sem metus ut dui. Duis rutrum tortor sed tincidunt fermentum. Mauris sollicitudin mi sit amet erat auctor, sed sodales ante congue. In vel ultricies nisl.
+          a.btn.btn-default(href="#") Read more
