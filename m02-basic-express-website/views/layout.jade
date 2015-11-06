@@ -2,6 +2,12 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/css/style.css')
   body
+    include ./menu.jade
     block content
+    script(src='/js/bootstrap.min.js', type='type/javascript')
+    script(src='/js/jquery-2.1.4.min.js', type='type/javascript')
+  
