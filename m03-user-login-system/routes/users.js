@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
+
+var upload = multer({ dest: './uploads/' });
+var User = require('../models/user');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,31 +22,39 @@ router.get('/login', function(req, res, next) {
   });
 });
 
-router.post('/register', function(req, res, next) {
+router.post('/register', upload.single('profileimage'), function(req, res, next) {
   var name = req.body.name,
       email = req.body.email,
       username = req.body.username,
       password = req.body.password,
       password2 =  req.body.password2;
 
+  var profileImageName,
+      profileImageOriginalName,
+      profileImageMime,
+      profileImagePath,
+      profileImageExt,
+      profileImageSize;
+
   // Check for Image Field
   if(req.body.profileimage){
-    console.log('Uploading File...');
+    console.log('uploading File...');
 
     // File Info
-    var profileImageOriginalName = req.body.profileimage.originalname,
-        profileImageName = req.body.profileimage.name,
-        profileImageMime = req.body.profileimage.mimetype,
-        profileImagePath = req.body.profileimage.path,
-        profileImageExt = req.body.profileimage.extension,
-        profileImageSize = req.body.profileimage.size;
+    profileImageOriginalName = req.body.profileimage.originalname;
+    profileImageName = req.body.profileimage.name;
 
+    profileImageMime = req.body.profileimage.mimetype;
+    profileImagePath = req.body.profileimage.path;
+    profileImageExt = req.body.profileimage.extension;
+    profileImageSize = req.body.profileimage.size;
   } else {
     // Set a Default Image
-    var profileImageName = 'noimage.png';
+    profileImageName = 'noimage.png';
   }
 
   // Form Validation
+
   req.checkBody('name','Name field is required').notEmpty();
   req.checkBody('email','Email field is required').notEmpty();
   req.checkBody('email','Email not valid').isEmail();
@@ -68,14 +80,14 @@ router.post('/register', function(req, res, next) {
       email: email,
       username: username,
       password: password,
-      profileImage: profileImageName
+      profileimage: profileImageName
     });
 
     // Create User
-    // User.createUser(newUser, function(err, user){
-    //     if(err)throw err;
-    //     console.log(user);
-    // });
+    User.createUser(newUser, function(err, user){
+      if(err)throw err;
+      console.log(user);
+    });
 
     //Success Message
     req.flash('success', 'You are noew registered and may log in');

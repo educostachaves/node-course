@@ -3,13 +3,13 @@ extends layout
 block content
   h1 Register
   p Please register using the form below
-  .alert.alert-danger
-    a.close(href='#', data-dismiss='alert', aria-label='close') &times;
-    ul.errors
-      if errors
+  if errors
+    .alert.alert-danger
+      a.close(href='#', data-dismiss='alert', aria-label='close') &times;
+      ul.errors
         each error, i in errors
           li #{error.msg}
-  form(method='post', action='/users/register',enctype='multipart/form-data')
+  form(method='post', action='/users/register',enctype='application/json')
     .form-group
       label Name
       input.form-control(name='name', type='text', placeholder='Enter Name')
