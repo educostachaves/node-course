@@ -1,7 +1,16 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    title #{title}: Node Auth
+    link(rel='stylesheet', href='./stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='./stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='./stylesheets/style.css')
   body
-    block content
+    include ./menu.jade
+    .section
+      .container
+        block content
+    include ./footer.jade
+    script(src='/javascript/bootstrap.min.js', type='type/javascript')
+    script(src='/javascript/jquery-2.1.4.min.js', type='type/javascript')
+  
