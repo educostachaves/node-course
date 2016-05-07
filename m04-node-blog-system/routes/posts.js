@@ -6,7 +6,17 @@ var upload = multer({ dest: './public/images' });
 var mongo = require('mongodb');
 var db = require('monk')('localhost/node-blog');
 
-/* GET Posts listing. */
+router.get('/show/:id', function(req, res, next) {
+  var posts = db.get('posts');
+
+  posts.findById( req.params.id, function(err, post){
+    res.render('showpost', {
+      'post': post
+    });
+  });
+
+});
+
 router.get('/add', function(req, res, next) {
   var categories = db.get('categories');
 
@@ -56,6 +66,56 @@ router.post('/add', upload.single('mainimage'), function(req, res, next) {
         req.flash('success', 'Post Added');
         res.location('/');
         res.redirect('/');
+      }
+    });
+  }
+
+});
+
+router.post('/addcomment', function(req, res, next) {
+  var posts = db.get('posts');
+
+  var name = req.body.name;
+  var email = req.body.email;
+  var postid = req.body.postid;
+  var body = req.body.body;
+  var commentdate = new Date();
+
+  req.checkBody('name','Name Field is required').notEmpty();
+  req.checkBody('email','E-mail Field is required, but never displayed').notEmpty();
+  req.checkBody('email','E-mail is not formatted properly').isEmail();
+  req.checkBody('body','Body Field is required').notEmpty();
+
+  var errors = req.validationErrors();
+
+  if(errors) {
+    posts.findById(postid, function(err, post){
+      res.render('showpost',{
+        "errors" : errors,
+        "post" : post
+      });
+    });
+  } else {
+    var comment = {
+      "name" : name,
+      "email" : email,
+      "body" : body,
+      "commentdate": commentdate
+    };
+
+    posts.update({
+      "_id" : postid
+    }, {
+      $push: {
+        "comments" : comment
+      }
+    }, function(err, doc){
+      if(err){
+        throw err;
+      } else {
+        req.flash('success', 'Comment Added');
+        res.location('/posts/show/' + postid);
+        res.redirect('/posts/show/' + postid);
       }
     });
   }
